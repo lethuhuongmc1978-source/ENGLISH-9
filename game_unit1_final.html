@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏘️ Unit 1: Local Community - Learning Game</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 0;
+        }
+
+        .teacher-header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 25px 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .teacher-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff" fill-opacity="0.1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,154.7C960,171,1056,181,1152,165.3C1248,149,1344,107,1392,85.3L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') no-repeat bottom;
+            background-size: cover;
+            opacity: 0.3;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .teacher-info {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .teacher-name {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .teacher-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .teacher-details h2 {
+            font-size: 1.8em;
+            margin-bottom: 5px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .teacher-details p {
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+
+        .school-logo {
+            font-size: 3em;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        .main-title {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .main-title h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .main-title p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .menu-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .menu-item {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-item::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .menu-item:hover::before {
+            opacity: 1;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .menu-item h3 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .menu-item p {
+            opacity: 0.9;
+        }
+
+        .game-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            display: none;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        .game-card.active {
+            display: block;
+        }
+
+        .back-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            transform: translateX(-5px);
+            box-shadow: 0 4px 15px rgba(240, 147, 251, 0.4);
+        }
+
+        .vocab-card {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 4px solid #667eea;
+            transition: all 0.3s ease;
+        }
+
+        .vocab-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+        }
+
+        .vocab-word {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .vocab-type {
+            color: #888;
+            font-style: italic;
+            margin-bottom: 8px;
+        }
+
+        .vocab-meaning {
+            color: #333;
+            margin-bottom: 8px;
+            background: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-weight: 500;
+        }
+
+        .vocab-example {
+            color: #666;
+            font-style: italic;
+            border-left: 3px solid #ddd;
+            padding-left: 15px;
+        }
+
+        .grammar-box {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #2196F3;
+            transition: all 0.3s ease;
+        }
+
+        .grammar-box:hover {
+            box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
+        }
+
+        .grammar-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #2196F3;
+            margin-bottom: 15px;
+        }
+
+        .grammar-rule {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .phrasal-verb-card {
+            background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 4px solid #ff9800;
+            transition: all 0.3s ease;
+        }
+
+        .phrasal-verb-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(255, 152, 0, 0.3);
+        }
+
+        .phrasal-verb-title {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #ff9800;
+            margin-bottom: 8px;
+        }
+
+        .phrasal-verb-meaning-en {
+            color: #555;
+            margin-bottom: 6px;
+            padding: 8px 12px;
+            background: white;
+            border-radius: 6px;
+            font-style: italic;
+        }
+
+        .phrasal-verb-meaning-vi {
+            color: #d84315;
+            font-weight: 600;
+            margin-bottom: 10px;
+            padding: 8px 12px;
+            background: white;
+            border-radius: 6px;
+        }
+
+        .phrasal-verb-example {
+            color: #666;
+            font-style: italic;
+            border-left: 3px solid #ff9800;
+            padding-left: 15px;
+            margin-top: 8px;
+        }
+
+        .pronunciation-card {
+            background: linear-gradient(135deg, #f3e5f5, #e1bee7);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 4px solid #9c27b0;
+            transition: all 0.3s ease;
+        }
+
+        .pronunciation-card:hover {
+            box-shadow: 0 4px 15px rgba(156, 39, 176, 0.3);
+        }
+
+        .sound-symbol {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #9c27b0;
+            margin-bottom: 10px;
+        }
+
+        .word-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .word-chip {
+            background: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            border: 2px solid #9c27b0;
+            color: #9c27b0;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .word-chip:hover {
+            background: #9c27b0;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .quiz-container {
+            margin-top: 20px;
+        }
+
+        .question-box {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .question-text {
+            font-size: 1.2em;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .options {
+            display: grid;
+            gap: 12px;
+        }
+
+        .option {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 15px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .option:hover {
+            background: #e8eaf6;
+            border-color: #667eea;
+        }
+
+        .option.selected {
+            background: #e3f2fd;
+            border-color: #2196F3;
+        }
+
+        .option.correct {
+            background: #c8e6c9;
+            border-color: #4CAF50;
+            animation: pulse 0.5s ease;
+        }
+
+        .option.incorrect {
+            background: #ffcdd2;
+            border-color: #f44336;
+            animation: shake 0.5s ease;
+        }
+
+        .option-letter {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 12px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .score-display {
+            background: linear-gradient(135deg, #4CAF50, #8BC34A);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .score-display h3 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .progress-bar {
+            background: #e0e0e0;
+            border-radius: 10px;
+            height: 30px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+            height: 100%;
+            transition: width 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .teacher-footer {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 30px 20px;
+            margin-top: 40px;
+            text-align: center;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.3);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-info {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+
+        .footer-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-icon {
+            font-size: 2em;
+        }
+
+        .footer-text h3 {
+            font-size: 1.2em;
+            margin-bottom: 5px;
+        }
+
+        .footer-text p {
+            opacity: 0.9;
+        }
+
+        .copyright {
+            border-top: 1px solid rgba(255,255,255,0.2);
+            padding-top: 20px;
+            opacity: 0.8;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        @media (max-width: 768px) {
+            .teacher-details h2 {
+                font-size: 1.3em;
+            }
+            
+            .main-title h1 {
+                font-size: 1.8em;
+            }
+            
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-info {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Teacher Header -->
+    <div class="teacher-header">
+        <div class="header-content">
+            <div class="teacher-info">
+                <div class="teacher-name">
+                    <div class="teacher-icon">👩‍🏫</div>
+                    <div class="teacher-details">
+                        <h2>Cô Lê Hương</h2>
+                        <p>Giáo viên Tiếng Anh</p>
+                    </div>
+                </div>
+                <div class="school-logo">🏫</div>
+                <div class="teacher-details" style="text-align: right;">
+                    <h2>TH&THCS Hải Hòa</h2>
+                    <p>Móng Cái 1 - Quảng Ninh</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="main-title">
+            <h1>🏘️ Unit 1: Local Community</h1>
+            <p>Learn vocabulary, grammar, and pronunciation</p>
+        </div>
+
+        <!-- Main Menu -->
+        <div class="menu-card" id="mainMenu">
+            <h2 style="text-align: center; color: #667eea; margin-bottom: 30px;">Choose Your Learning Mode</h2>
+            <div class="menu-grid">
+                <div class="menu-item" onclick="showSection('vocabulary')">
+                    <h3>📚 Vocabulary</h3>
+                    <p>Learn community helpers and places</p>
+                </div>
+                <div class="menu-item" onclick="showSection('grammar')">
+                    <h3>📖 Grammar</h3>
+                    <p>Question words + to-infinitives & Phrasal verbs</p>
+                </div>
+                <div class="menu-item" onclick="showSection('pronunciation')">
+                    <h3>🗣️ Pronunciation</h3>
+                    <p>Vowel sounds /æ/, /ɑː/, /e/</p>
+                </div>
+                <div class="menu-item" onclick="showSection('practice')">
+                    <h3>✏️ Practice Test</h3>
+                    <p>Test your knowledge</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vocabulary Section -->
+        <div class="game-card" id="vocabulary">
+            <button class="back-btn" onclick="backToMenu()">⬅️ Back to Menu</button>
+            <h2 style="color: #667eea; margin-bottom: 20px;">📚 Vocabulary - Community Helpers & Places</h2>
+            
+            <div class="vocab-card">
+                <div class="vocab-word">community helper (n)</div>
+                <div class="vocab-type">/kəˈmjuːnəti ˈhelpə(r)/</div>
+                <div class="vocab-meaning">🇻🇳 Người giúp đỡ cộng đồng</div>
+                <div class="vocab-example">Example: Police officers and firefighters are important community helpers.</div>
+            </div>
+
+            <div class="vocab-card">
+                <div class="vocab-word">police officer (n)</div>
+                <div class="vocab-type">/pəˈliːs ˈɒfɪsə(r)/</div>
+                <div class="vocab-meaning">🇻🇳 Cảnh sát</div>
+                <div class="vocab-example">Example: The police officer helps keep our neighbourhood safe.</div>
+            </div>
+
+            <div class="vocab-card">
+                <div class="vocab-word">garbage collector (n)</div>
+                <div class="vocab-type">/ˈɡɑːbɪdʒ kəˈlektə(r)/</div>
+                <div class="vocab-meaning">🇻🇳 Người thu gom rác</div>
+                <div class="vocab-example">Example: The garbage collector comes every morning at 6 a.m.</div>
+            </div>
+
+            <div class="vocab-card">
+                <div class="vocab-word">electrician (n)</div>
+                <div class="vocab-type">/ɪˌlekˈtrɪʃn/</div>
+                <div class="vocab-meaning">🇻🇳 Thợ điện</div>
+                <div class="vocab-example">Example: We called an electrician to fix the broken wires.</div>
+            </div>
+
+            <div class="vocab-card">
+                <div class="vocab-word">firefighter (n)</div>
+                <div class="vocab-type">/ˈfaɪəfaɪtə(r)/</div>
+                <div class="vocab-meaning">🇻🇳 Lính cứu hỏa</div>
+                <div class="vocab-example">Example: Firefighters are very brave when they save people from fires.</div>
+            </div>
+
+            <div class="vocab-card">
+                <div class="vocab-word">delivery person (n)</div>
+                <div class="vocab-type">/dɪˈlɪvəri ˈpɜːsn/</div>
+                <div class="vocab-meaning">🇻🇳 Người giao hàng</div>
+                <div class="vocab-example">Example: The delivery person brings packages to our house.</div>
+            </div>
+
+            <div class="vocab-card">
+                <div class="vocab-word">suburb (n)</div>
+                <div class="vocab-type">/ˈsʌbɜːb/</div>
+                <div class="vocab-meaning">🇻🇳 Ngoại ô</div>
+                <div class="vocab-example">Example: We moved to a suburb last month.</div>
+            </div>
+
+            <div class="vocab-card">
+                <div class="vocab-word">facilities (n)</div>
+                <div class="vocab-type">/fəˈsɪlətiz/</div>
+                <div class="vocab-meaning">🇻🇳 Cơ sở vật chất</div>
+                <div class="vocab-example">Example: The neighbourhood has many good facilities like parks and libraries.</div>
+            </div>
+
+            <div class="vocab-card">
+                <div class="vocab-word">artisan (n)</div>
+                <div class="vocab-type">/ˌɑːtɪˈzæn/</div>
+                <div class="vocab-meaning">🇻🇳 Thợ thủ công</div>
+                <div class="vocab-example">Example: Local artisans make beautiful pottery.</div>
+            </div>
+
+            <div class="vocab-card">
+                <div class="vocab-word">handicraft (n)</div>
+                <div class="vocab-type">/ˈhændikrɑːft/</div>
+                <div class="vocab-meaning">🇻🇳 Đồ thủ công</div>
+                <div class="vocab-example">Example: These handicrafts are made from bamboo.</div>
+            </div>
+
+            <div class="vocab-card">
+                <div class="vocab-word">speciality food (n)</div>
+                <div class="vocab-type">/ˌspeʃiˈæləti fuːd/</div>
+                <div class="vocab-meaning">🇻🇳 Đặc sản</div>
+                <div class="vocab-example">Example: Com Lang Vong is a speciality food of Ha Noi.</div>
+            </div>
+
+            <div class="vocab-card">
+                <div class="vocab-word">souvenir (n)</div>
+                <div class="vocab-type">/ˌsuːvəˈnɪə(r)/</div>
+                <div class="vocab-meaning">🇻🇳 Quà lưu niệm</div>
+                <div class="vocab-example">Example: Tourists buy lanterns as souvenirs.</div>
+            </div>
+        </div>
+
+        <!-- Grammar Section -->
+        <div class="game-card" id="grammar">
+            <button class="back-btn" onclick="backToMenu()">⬅️ Back to Menu</button>
+            <h2 style="color: #667eea; margin-bottom: 20px;">📖 Grammar</h2>
+            
+            <div class="grammar-box">
+                <div class="grammar-title">1. Question words before to-infinitives</div>
+                <div class="grammar-rule">
+                    <p><strong>Structure:</strong> Question word + to-infinitive</p>
+                    <p style="margin-top: 10px;"><strong>Question words:</strong> who, what, where, when, how</p>
+                    <p style="margin-top: 10px;"><strong>Examples:</strong></p>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>I don't know <strong>what to do</strong> to help the community.</li>
+                        <li>She asked <strong>how to get</strong> to the nearest shopping mall.</li>
+                        <li>Could you tell me <strong>where to buy</strong> traditional handicrafts?</li>
+                        <li>They wonder <strong>when to take out</strong> the rubbish.</li>
+                    </ul>
+                </div>
+                <div class="grammar-rule">
+                    <p><strong>We often use verbs like:</strong> ask, wonder, (not) decide, (not) tell, (not) know</p>
+                </div>
+            </div>
+
+            <h3 style="color: #ff9800; margin: 30px 0 20px 0; font-size: 1.5em;">2. Phrasal Verbs (1)</h3>
+
+            <div class="phrasal-verb-card">
+                <div class="phrasal-verb-title">look around</div>
+                <div class="phrasal-verb-meaning-en">📖 to walk around a place to see what is there</div>
+                <div class="phrasal-verb-meaning-vi">🇻🇳 Đi xung quanh để xem có gì</div>
+                <div class="phrasal-verb-example">Example: We looked around the new shopping mall.</div>
+            </div>
+
+            <div class="phrasal-verb-card">
+                <div class="phrasal-verb-title">come back</div>
+                <div class="phrasal-verb-meaning-en">📖 to return to a place</div>
+                <div class="phrasal-verb-meaning-vi">🇻🇳 Quay trở lại</div>
+                <div class="phrasal-verb-example">Example: She will come back from her home town next week.</div>
+            </div>
+
+            <div class="phrasal-verb-card">
+                <div class="phrasal-verb-title">hand down</div>
+                <div class="phrasal-verb-meaning-en">📖 to get information about somebody/something</div>
+                <div class="phrasal-verb-meaning-vi">🇻🇳 Truyền lại, để lại (cho thế hệ sau)</div>
+                <div class="phrasal-verb-example">Example: My grandparents handed down their skills to my parents.</div>
+            </div>
+
+            <div class="phrasal-verb-card">
+                <div class="phrasal-verb-title">find out</div>
+                <div class="phrasal-verb-meaning-en">📖 to get information about somebody/something</div>
+                <div class="phrasal-verb-meaning-vi">🇻🇳 Tìm ra, phát hiện ra</div>
+                <div class="phrasal-verb-example">Example: Before we go, we always find out about the place.</div>
+            </div>
+
+            <div class="phrasal-verb-card">
+                <div class="phrasal-verb-title">take care of</div>
+                <div class="phrasal-verb-meaning-en">📖 to be responsible for somebody/something</div>
+                <div class="phrasal-verb-meaning-vi">🇻🇳 Chăm sóc, trông nom</div>
+                <div class="phrasal-verb-example">Example: The eldest child is usually responsible for taking care of his or her parents.</div>
+            </div>
+
+            <div class="phrasal-verb-card">
+                <div class="phrasal-verb-title">get on with</div>
+                <div class="phrasal-verb-meaning-en">📖 to have a good relationship with somebody</div>
+                <div class="phrasal-verb-meaning-vi">🇻🇳 Hòa thuận với, có quan hệ tốt với</div>
+                <div class="phrasal-verb-example">Example: They have a good relationship with all neighbours.</div>
+            </div>
+
+            <div class="phrasal-verb-card">
+                <div class="phrasal-verb-title">go out</div>
+                <div class="phrasal-verb-meaning-en">📖 leave your house to go to a social event</div>
+                <div class="phrasal-verb-meaning-vi">🇻🇳 Đi ra ngoài (để giao lưu, vui chơi)</div>
+                <div class="phrasal-verb-example">Example: Do you enjoy going out at weekends?</div>
+            </div>
+
+            <div class="phrasal-verb-card">
+                <div class="phrasal-verb-title">pass down</div>
+                <div class="phrasal-verb-meaning-en">📖 give or teach something to your children</div>
+                <div class="phrasal-verb-meaning-vi">🇻🇳 Truyền lại (cho con cháu)</div>
+                <div class="phrasal-verb-example">Example: Artisans pass down traditional techniques by passing them to their sons.</div>
+            </div>
+
+            <div class="phrasal-verb-card">
+                <div class="phrasal-verb-title">cut down on</div>
+                <div class="phrasal-verb-meaning-en">📖 reduce the amount or number of something</div>
+                <div class="phrasal-verb-meaning-vi">🇻🇳 Cắt giảm, giảm bớt</div>
+                <div class="phrasal-verb-example">Example: In some villages, people reduce the number of steps to make the handicraft.</div>
+            </div>
+
+            <div class="phrasal-verb-card">
+                <div class="phrasal-verb-title">run out of</div>
+                <div class="phrasal-verb-meaning-en">📖 have no more of</div>
+                <div class="phrasal-verb-meaning-vi">🇻🇳 Hết, cạn kiệt</div>
+                <div class="phrasal-verb-example">Example: We've run out of milk. Can you buy some?</div>
+            </div>
+        </div>
+
+        <!-- Pronunciation Section -->
+        <div class="game-card" id="pronunciation">
+            <button class="back-btn" onclick="backToMenu()">⬅️ Back to Menu</button>
+            <h2 style="color: #667eea; margin-bottom: 20px;">🗣️ Pronunciation - Vowel Sounds</h2>
+            
+            <div class="pronunciation-card">
+                <div class="sound-symbol">/æ/ as in "cat" 🐱</div>
+                <p><strong>Words with /æ/:</strong></p>
+                <div class="word-list">
+                    <div class="word-chip">pack</div>
+                    <div class="word-chip">marry</div>
+                    <div class="word-chip">chat</div>
+                    <div class="word-chip">craft</div>
+                    <div class="word-chip">bamboo</div>
+                </div>
+            </div>
+
+            <div class="pronunciation-card">
+                <div class="sound-symbol">/ɑː/ as in "car" 🚗</div>
+                <p><strong>Words with /ɑː/:</strong></p>
+                <div class="word-list">
+                    <div class="word-chip">park</div>
+                    <div class="word-chip">chart</div>
+                    <div class="word-chip">artisan</div>
+                    <div class="word-chip">garbage</div>
+                </div>
+            </div>
+
+            <div class="pronunciation-card">
+                <div class="sound-symbol">/e/ as in "bed" 🛏️</div>
+                <p><strong>Words with /e/:</strong></p>
+                <div class="word-list">
+                    <div class="word-chip">kettle</div>
+                    <div class="word-chip">merry</div>
+                    <div class="word-chip">bread</div>
+                    <div class="word-chip">relax</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Practice Test Section -->
+        <div class="game-card" id="practice">
+            <button class="back-btn" onclick="backToMenu()">⬅️ Back to Menu</button>
+            <h2 style="color: #667eea; margin-bottom: 20px;">✏️ Practice Test</h2>
+            
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressBar">
+                    <span id="progressText">Question 0/15</span>
+                </div>
+            </div>
+
+            <div class="score-display" id="scoreDisplay" style="display: none;">
+                <h3 id="finalScore"></h3>
+                <p id="scoreMessage"></p>
+            </div>
+
+            <div class="quiz-container" id="quizContainer"></div>
+            
+            <button class="submit-btn" id="submitBtn" onclick="submitAnswer()">Submit Answer</button>
+            <button class="submit-btn" id="restartBtn" onclick="restartQuiz()" style="display: none;">🔄 Try Again</button>
+        </div>
+    </div>
+
+    <!-- Teacher Footer -->
+    <div class="teacher-footer">
+        <div class="footer-content">
+            <div class="footer-info">
+                <div class="footer-item">
+                    <div class="footer-icon">👩‍🏫</div>
+                    <div class="footer-text">
+                        <h3>Cô Lê Hương</h3>
+                        <p>Giáo viên Tiếng Anh</p>
+                    </div>
+                </div>
+                <div class="footer-item">
+                    <div class="footer-icon">🏫</div>
+                    <div class="footer-text">
+                        <h3>TH&THCS Hải Hòa</h3>
+                        <p>Móng Cái 1 - Quảng Ninh</p>
+                    </div>
+                </div>
+                <div class="footer-item">
+                    <div class="footer-icon">📚</div>
+                    <div class="footer-text">
+                        <h3>Unit 1</h3>
+                        <p>Local Community</p>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© 2025 Learning English with Cô Lê Hương | Made with ❤️ for students</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const quizQuestions = [
+            {
+                question: "Choose the correct community helper: This person puts in, checks, and repairs electrical wires.",
+                options: ["Police officer", "Electrician", "Firefighter", "Garbage collector"],
+                correct: 1
+            },
+            {
+                question: "Fill in the blank: Mi's family moved to a new house in a _______.",
+                options: ["city centre", "suburb", "village", "downtown"],
+                correct: 1
+            },
+            {
+                question: "What does 'get on with' mean?",
+                options: ["To arrive at", "To have a good relationship with", "To understand", "To move forward"],
+                correct: 1
+            },
+            {
+                question: "Choose the correct sentence:",
+                options: [
+                    "I don't know how I can get to the pool",
+                    "I don't know how to get to the pool",
+                    "I don't know how get to the pool",
+                    "I don't know to get how to the pool"
+                ],
+                correct: 1
+            },
+            {
+                question: "Which word has the /æ/ sound?",
+                options: ["park", "pack", "pork", "pick"],
+                correct: 1
+            },
+            {
+                question: "What is a 'speciality food'?",
+                options: [
+                    "Food for special occasions",
+                    "A traditional local food product",
+                    "Expensive food",
+                    "Fast food"
+                ],
+                correct: 1
+            },
+            {
+                question: "Complete: Could you tell me _______ to buy traditional handicrafts?",
+                options: ["what", "where", "who", "which"],
+                correct: 1
+            },
+            {
+                question: "What does 'hand down' mean?",
+                options: [
+                    "To give something to somebody younger",
+                    "To put something down",
+                    "To write something",
+                    "To lower your hand"
+                ],
+                correct: 0
+            },
+            {
+                question: "An artisan is a person who:",
+                options: [
+                    "Sells art",
+                    "Makes things with their hands",
+                    "Teaches art",
+                    "Collects art"
+                ],
+                correct: 1
+            },
+            {
+                question: "Which word has the /ɑː/ sound?",
+                options: ["chat", "chart", "check", "cheer"],
+                correct: 1
+            },
+            {
+                question: "Complete the phrasal verb: We need to _______ on fast food.",
+                options: ["cut down", "cut up", "cut off", "cut in"],
+                correct: 0
+            },
+            {
+                question: "What are 'facilities'?",
+                options: [
+                    "Easy things",
+                    "Buildings and equipment provided for a purpose",
+                    "Friendly people",
+                    "Family members"
+                ],
+                correct: 1
+            },
+            {
+                question: "She asked _______ she should give to her neighbour.",
+                options: ["how", "what", "where", "when"],
+                correct: 1
+            },
+            {
+                question: "Which is a community helper?",
+                options: ["Tourist", "Delivery person", "Shopper", "Student"],
+                correct: 1
+            },
+            {
+                question: "A souvenir is:",
+                options: [
+                    "Something expensive",
+                    "A gift to remember a place",
+                    "Local food",
+                    "A type of craft"
+                ],
+                correct: 1
+            }
+        ];
+
+        let currentQuestion = 0;
+        let userAnswers = [];
+        let score = 0;
+
+        function showSection(section) {
+            document.getElementById('mainMenu').classList.remove('active');
+            document.getElementById('vocabulary').classList.remove('active');
+            document.getElementById('grammar').classList.remove('active');
+            document.getElementById('pronunciation').classList.remove('active');
+            document.getElementById('practice').classList.remove('active');
+            
+            document.getElementById(section).classList.add('active');
+            
+            if (section === 'practice') {
+                startQuiz();
+            }
+        }
+
+        function backToMenu() {
+            document.getElementById('mainMenu').classList.add('active');
+            document.getElementById('vocabulary').classList.remove('active');
+            document.getElementById('grammar').classList.remove('active');
+            document.getElementById('pronunciation').classList.remove('active');
+            document.getElementById('practice').classList.remove('active');
+        }
+
+        function startQuiz() {
+            currentQuestion = 0;
+            userAnswers = [];
+            score = 0;
+            document.getElementById('scoreDisplay').style.display = 'none';
+            document.getElementById('submitBtn').style.display = 'block';
+            document.getElementById('restartBtn').style.display = 'none';
+            displayQuestion();
+        }
+
+        function displayQuestion() {
+            if (currentQuestion >= quizQuestions.length) {
+                showResults();
+                return;
+            }
+
+            const q = quizQuestions[currentQuestion];
+            const container = document.getElementById('quizContainer');
+            
+            let html = `
+                <div class="question-box">
+                    <div class="question-text"><strong>Question ${currentQuestion + 1}:</strong> ${q.question}</div>
+                    <div class="options">
+            `;
+            
+            q.options.forEach((option, index) => {
+                const letter = String.fromCharCode(65 + index);
+                const isSelected = userAnswers[currentQuestion] === index;
+                html += `
+                    <div class="option ${isSelected ? 'selected' : ''}" onclick="selectAnswer(${index})">
+                        <div class="option-letter">${letter}</div>
+                        <div>${option}</div>
+                    </div>
+                `;
+            });
+            
+            html += `</div></div>`;
+            container.innerHTML = html;
+            
+            updateProgress();
+        }
+
+        function selectAnswer(index) {
+            userAnswers[currentQuestion] = index;
+            displayQuestion();
+        }
+
+        function updateProgress() {
+            const percentage = ((currentQuestion + 1) / quizQuestions.length) * 100;
+            document.getElementById('progressBar').style.width = percentage + '%';
+            document.getElementById('progressText').textContent = `Question ${currentQuestion + 1}/${quizQuestions.length}`;
+        }
+
+        function submitAnswer() {
+            if (userAnswers[currentQuestion] === undefined) {
+                alert('Please select an answer!');
+                return;
+            }
+
+            const q = quizQuestions[currentQuestion];
+            const options = document.querySelectorAll('.option');
+            
+            options.forEach((option, index) => {
+                if (index === q.correct) {
+                    option.classList.add('correct');
+                } else if (index === userAnswers[currentQuestion]) {
+                    option.classList.add('incorrect');
+                }
+            });
+
+            if (userAnswers[currentQuestion] === q.correct) {
+                score++;
+            }
+
+            setTimeout(() => {
+                currentQuestion++;
+                displayQuestion();
+            }, 1500);
+        }
+
+        function showResults() {
+            const percentage = (score / quizQuestions.length * 10).toFixed(1);
+            
+            let emoji, message;
+            if (percentage >= 9) {
+                emoji = '🏆';
+                message = 'Excellent! You are a master!';
+            } else if (percentage >= 8) {
+                emoji = '🎉';
+                message = 'Great job! Well done!';
+            } else if (percentage >= 6.5) {
+                emoji = '😊';
+                message = 'Good! Keep practicing!';
+            } else if (percentage >= 5) {
+                emoji = '📚';
+                message = 'Not bad! Review the lesson!';
+            } else {
+                emoji = '💪';
+                message = 'Keep trying! You can do it!';
+            }
+            
+            document.getElementById('quizContainer').innerHTML = '';
+            document.getElementById('finalScore').innerHTML = `${emoji}<br>${score}/${quizQuestions.length}`;
+            document.getElementById('scoreMessage').textContent = message;
+            document.getElementById('scoreDisplay').style.display = 'block';
+            document.getElementById('submitBtn').style.display = 'none';
+            document.getElementById('restartBtn').style.display = 'block';
+        }
+
+        function restartQuiz() {
+            startQuiz();
+        }
+
+        // Initialize
+        document.getElementById('mainMenu').classList.add('active');
+    </script>
+</body>
+</html>
